@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(${torneo.nome})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <a th:href="@{/tornei}" class="btn btn-outline btn-sm">← Tornei</a>
+            <h1 th:text="${torneo.nome}"></h1>
+            <span class="badge" th:text="${torneo.anno}"></span>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="admin-actions">
+            <a th:href="@{/tornei/{id}/modifica(id=${torneo.id})}" class="btn btn-secondary">Modifica</a>
+            <a th:href="@{/partite/nuova}" class="btn btn-primary">+ Partita</a>
+        </div>
+    </div>
+
+    <p class="description" th:text="${torneo.descrizione}"></p>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Squadre Partecipanti</h2>
+        </div>
+        <div th:if="${#lists.isEmpty(torneo.squadre)}" class="empty-state">
+            <p>Nessuna squadra registrata.</p>
+        </div>
+        <div class="tag-list">
+            <a class="tag" th:each="s : ${torneo.squadre}"
+               th:href="@{/squadre/{id}(id=${s.id})}"
+               th:text="${s.nome}"></a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Calendario Partite</h2>
+            <a th:href="@{/tornei/{id}/classifica(id=${torneo.id})}" class="btn btn-outline">Classifica</a>
+        </div>
+        <div th:if="${#lists.isEmpty(partite)}" class="empty-state">
+            <p>Nessuna partita programmata.</p>
+        </div>
+        <table class="table" th:unless="${#lists.isEmpty(partite)}">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Casa</th>
+                    <th>Ospite</th>
+                    <th>Luogo</th>
+                    <th>Risultato</th>
+                    <th>Stato</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${partite}">
+                    <td th:text="${#temporals.format(p.dataOra, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${p.squadraHome.nome}"></td>
+                    <td th:text="${p.squadraAway.nome}"></td>
+                    <td th:text="${p.luogo}"></td>
+                    <td>
+                        <span th:if="${p.stato.name() == 'PLAYED'}"
+                              th:text="${p.goalsHome} + ' - ' + ${p.goalsAway}"></span>
+                        <span th:unless="${p.stato.name() == 'PLAYED'}">-</span>
+                    </td>
+                    <td><span class="badge" th:text="${p.stato}"></span></td>
+                    <td>
+                        <a th:href="@{/partite/{id}(id=${p.id})}" class="btn btn-sm">Dettagli</a>
+                        <span sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/partite/{id}/risultato(id=${p.id})}"
+                               th:if="${p.stato.name() == 'SCHEDULED'}"
+                               class="btn btn-sm btn-secondary">Risultato</a>
+                            <form th:action="@{/partite/{id}/elimina(id=${p.id})}" method="post" style="display:inline"
+                                  onsubmit="return confirm('Eliminare questa partita?')">
+                                <button type="submit" class="btn btn-sm btn-danger">✕</button>
+                            </form>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

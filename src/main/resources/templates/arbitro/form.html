@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Arbitro')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="form-card">
+        <h2 th:text="${arbitro.id != null} ? 'Modifica Arbitro' : 'Nuovo Arbitro'"></h2>
+
+        <form th:action="${arbitro.id != null} ? @{/arbitri/{id}/modifica(id=${arbitro.id})} : @{/arbitri/nuovo}"
+              th:object="${arbitro}" method="post">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nome *</label>
+                    <input type="text" th:field="*{nome}" required/>
+                    <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
+                <div class="form-group">
+                    <label>Cognome *</label>
+                    <input type="text" th:field="*{cognome}" required/>
+                    <span class="error" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Codice Arbitrale *</label>
+                <input type="text" th:field="*{codiceArbitrale}" required placeholder="Es. ARB-001"/>
+                <span class="error" th:if="${#fields.hasErrors('codiceArbitrale')}" th:errors="*{codiceArbitrale}"></span>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/arbitri}" class="btn btn-outline">Annulla</a>
+                <button type="submit" class="btn btn-primary">Salva</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

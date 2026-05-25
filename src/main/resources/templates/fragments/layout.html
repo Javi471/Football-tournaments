@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title} + ' | Football Tournaments'">Football Tournaments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav th:fragment="navbar">
+    <div class="navbar">
+        <a class="navbar-brand" th:href="@{/tornei}">⚽ Football Tournaments</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/tornei}">Tornei</a></li>
+            <li><a th:href="@{/squadre}">Squadre</a></li>
+            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/arbitri}">Arbitri</a></li>
+            <li sec:authorize="hasRole('ADMIN')" class="admin-link">
+                <a th:href="@{/tornei/nuovo}">+ Torneo</a>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')" class="admin-link">
+                <a th:href="@{/squadre/nuova}">+ Squadra</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" style="display:inline">
+                    <button type="submit" class="btn-link">Logout (<span sec:authentication="name"></span>)</button>
+                </form>
+            </li>
+            <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+            <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrati</a></li>
+        </ul>
+    </div>
+</nav>
+
+<footer th:fragment="footer">
+    <div class="footer">
+        <p>⚽ Football Tournaments &copy; 2026 — Sistema Informativo su Web</p>
+    </div>
+</footer>
+
+</body>
+</html>

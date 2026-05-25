@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Classifica ' + ${torneo.nome})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <a th:href="@{/tornei/{id}(id=${torneo.id})}" class="btn btn-outline btn-sm">← Torneo</a>
+            <h1>Classifica — <span th:text="${torneo.nome}"></span></h1>
+        </div>
+    </div>
+
+    <!-- React app monta qui la classifica dinamica -->
+    <div id="classifica-root" th:data-torneo-id="${torneo.id}"></div>
+
+    <!-- Fallback statico se React non carica -->
+    <noscript>
+        <p class="alert alert-error">JavaScript necessario per visualizzare la classifica.</p>
+    </noscript>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- React bundle -->
+<script type="module" th:src="@{/react/classifica.js}"></script>
+</body>
+</html>

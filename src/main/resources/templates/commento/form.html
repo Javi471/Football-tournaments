@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Modifica Commento')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="form-card">
+        <h2>Modifica Commento</h2>
+
+        <form th:action="@{/commenti/{id}/modifica(id=${commento.id})}" method="post">
+            <div class="form-group">
+                <label>Commento</label>
+                <textarea name="testo" rows="5" required th:text="${commento.testo}"></textarea>
+            </div>
+            <div class="form-actions">
+                <a th:href="@{/partite/{id}(id=${commento.partita.id})}" class="btn btn-outline">Annulla</a>
+                <button type="submit" class="btn btn-primary">Aggiorna</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

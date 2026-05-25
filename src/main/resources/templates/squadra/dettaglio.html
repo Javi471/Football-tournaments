@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(${squadra.nome})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <a th:href="@{/squadre}" class="btn btn-outline btn-sm">← Squadre</a>
+            <h1 th:text="${squadra.nome}"></h1>
+            <span class="badge" th:text="${squadra.citta}"></span>
+            <span class="badge badge-secondary" th:text="'Fondata: ' + ${squadra.annoFondazione}"></span>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="admin-actions">
+            <a th:href="@{/squadre/{id}/modifica(id=${squadra.id})}" class="btn btn-secondary">Modifica Squadra</a>
+            <a th:href="@{/giocatori/nuovo(squadraId=${squadra.id})}" class="btn btn-primary">+ Giocatore</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Rosa Giocatori</h2>
+        <div th:if="${#lists.isEmpty(squadra.giocatori)}" class="empty-state">
+            <p>Nessun giocatore registrato.</p>
+        </div>
+        <table class="table" th:unless="${#lists.isEmpty(squadra.giocatori)}">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Ruolo</th>
+                    <th>Data Nascita</th>
+                    <th>Altezza (cm)</th>
+                    <th sec:authorize="hasRole('ADMIN')">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="g : ${squadra.giocatori}">
+                    <td th:text="${g.nome}"></td>
+                    <td th:text="${g.cognome}"></td>
+                    <td><span class="badge" th:text="${g.ruolo}"></span></td>
+                    <td th:text="${#temporals.format(g.dataNascita, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${g.altezza}"></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/giocatori/{id}/modifica(id=${g.id})}" class="btn btn-sm">Modifica</a>
+                        <form th:action="@{/giocatori/{id}/elimina(id=${g.id})}" method="post" style="display:inline"
+                              onsubmit="return confirm('Eliminare questo giocatore?')">
+                            <button type="submit" class="btn btn-sm btn-danger">✕</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

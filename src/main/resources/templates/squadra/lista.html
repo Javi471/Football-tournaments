@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Squadre')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Squadre</h1>
+        <a th:href="@{/squadre/nuova}" sec:authorize="hasRole('ADMIN')" class="btn btn-primary">+ Nuova Squadra</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(squadre)}" class="empty-state">
+        <p>Nessuna squadra registrata.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card" th:each="s : ${squadre}">
+            <div class="card-body">
+                <h3 class="card-title" th:text="${s.nome}"></h3>
+                <p class="card-subtitle" th:text="${s.citta}"></p>
+                <p class="card-text" th:text="'Fondata nel ' + ${s.annoFondazione}"></p>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{/squadre/{id}(id=${s.id})}" class="btn btn-secondary">Rosa</a>
+                <div sec:authorize="hasRole('ADMIN')" class="admin-actions">
+                    <a th:href="@{/squadre/{id}/modifica(id=${s.id})}" class="btn btn-sm">Modifica</a>
+                    <form th:action="@{/squadre/{id}/elimina(id=${s.id})}" method="post" style="display:inline"
+                          onsubmit="return confirm('Eliminare questa squadra?')">
+                        <button type="submit" class="btn btn-sm btn-danger">Elimina</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

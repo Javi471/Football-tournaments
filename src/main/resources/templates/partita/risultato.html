@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inserisci Risultato')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="form-card">
+        <h2>Inserisci Risultato</h2>
+
+        <div class="match-summary">
+            <span class="team-name" th:text="${partita.squadraHome.nome}"></span>
+            <span class="vs">VS</span>
+            <span class="team-name" th:text="${partita.squadraAway.nome}"></span>
+        </div>
+        <p class="text-center text-muted"
+           th:text="${#temporals.format(partita.dataOra, 'dd/MM/yyyy HH:mm')} + ' — ' + ${partita.luogo}"></p>
+
+        <form th:action="@{/partite/{id}/risultato(id=${partita.id})}" method="post">
+            <div class="form-row score-row">
+                <div class="form-group text-center">
+                    <label th:text="${partita.squadraHome.nome}"></label>
+                    <input type="number" name="goalsHome" min="0" max="99"
+                           th:value="${partita.goalsHome}" required class="score-input"/>
+                </div>
+                <div class="score-separator">—</div>
+                <div class="form-group text-center">
+                    <label th:text="${partita.squadraAway.nome}"></label>
+                    <input type="number" name="goalsAway" min="0" max="99"
+                           th:value="${partita.goalsAway}" required class="score-input"/>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/partite/{id}(id=${partita.id})}" class="btn btn-outline">Annulla</a>
+                <button type="submit" class="btn btn-primary">Conferma Risultato</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
