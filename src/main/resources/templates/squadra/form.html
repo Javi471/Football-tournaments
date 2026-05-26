@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Squadra')}"></head>
+<head th:replace="~{fragments/layout :: head('Team')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="page-wrapper">
     <div class="form-card">
         <nav class="breadcrumb" style="margin-bottom:20px">
-            <a th:href="@{/squadre}">Squadre</a>
+            <a th:href="@{/squadre}">Teams</a>
             <span>›</span>
-            <span th:text="${squadra.id != null} ? 'Modifica Squadra' : 'Nuova Squadra'"></span>
+            <span th:text="${squadra.id != null} ? 'Edit Team' : 'New Team'"></span>
         </nav>
-        <h2 th:text="${squadra.id != null} ? 'Modifica Squadra' : 'Nuova Squadra'"></h2>
+        <h2 th:text="${squadra.id != null} ? 'Edit Team' : 'New Team'"></h2>
 
         <form th:action="${squadra.id != null} ? @{/squadre/{id}/modifica(id=${squadra.id})} : @{/squadre/nuova}"
               th:object="${squadra}" method="post">
 
             <div class="form-group">
-                <label>Nome *</label>
-                <input type="text" th:field="*{nome}" required placeholder="Es. FC Atletico Roma"/>
+                <label>Name *</label>
+                <input type="text" th:field="*{nome}" required placeholder="e.g. FC Atletico Roma"/>
                 <span class="error-msg" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
             </div>
 
             <div class="form-group">
-                <label>Città *</label>
-                <input type="text" th:field="*{citta}" required placeholder="Es. Roma"/>
+                <label>City *</label>
+                <input type="text" th:field="*{citta}" required placeholder="e.g. Rome"/>
                 <span class="error-msg" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></span>
             </div>
 
             <div class="form-group">
-                <label>Anno di Fondazione *</label>
+                <label>Founded Year *</label>
                 <input type="number" th:field="*{annoFondazione}" required min="1800" max="2026"
-                       placeholder="Es. 1990"/>
+                       placeholder="e.g. 1990"/>
                 <span class="error-msg" th:if="${#fields.hasErrors('annoFondazione')}"
                       th:errors="*{annoFondazione}"></span>
             </div>
 
             <div class="form-actions">
-                <a th:href="@{/squadre}" class="btn btn-ghost">Annulla</a>
-                <button type="submit" class="btn btn-primary">Salva Squadra</button>
+                <a th:href="@{/squadre}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Team</button>
             </div>
         </form>
     </div>

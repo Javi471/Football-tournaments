@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Inserisci Risultato')}"></head>
+<head th:replace="~{fragments/layout :: head('Enter Score')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="page-wrapper" style="max-width:600px">
     <div class="form-card">
         <nav class="breadcrumb" style="margin-bottom:20px">
-            <a th:href="@{/tornei}">Tornei</a>
+            <a th:href="@{/tornei}">Tournaments</a>
             <span>›</span>
-            <a th:href="@{/partite/{id}(id=${partita.id})}">Partita</a>
+            <a th:href="@{/partite/{id}(id=${partita.id})}">Match</a>
             <span>›</span>
-            <span>Inserisci Risultato</span>
+            <span>Enter Score</span>
         </nav>
-        <h2>Inserisci Risultato</h2>
+        <h2>Enter Score</h2>
 
-        <!-- Match header in form -->
         <div style="text-align:center;background:var(--ink-3);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:28px">
             <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
                 <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff"
@@ -44,8 +43,8 @@
             </div>
 
             <div class="form-actions">
-                <a th:href="@{/partite/{id}(id=${partita.id})}" class="btn btn-ghost">Annulla</a>
-                <button type="submit" class="btn btn-primary">Conferma Risultato</button>
+                <a th:href="@{/partite/{id}(id=${partita.id})}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">Confirm Score</button>
             </div>
         </form>
     </div>

@@ -25,14 +25,14 @@
             </div>
         </a>
         <ul class="nav-links">
-            <li><a th:href="@{/tornei}">Tornei</a></li>
-            <li><a th:href="@{/squadre}">Squadre</a></li>
-            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/arbitri}">Arbitri</a></li>
+            <li><a th:href="@{/tornei}">Tournaments</a></li>
+            <li><a th:href="@{/squadre}">Teams</a></li>
+            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/arbitri}">Referees</a></li>
             <li sec:authorize="hasRole('ADMIN')" class="admin-link">
-                <a th:href="@{/tornei/nuovo}">+ Torneo</a>
+                <a th:href="@{/tornei/nuovo}">+ Tournament</a>
             </li>
             <li sec:authorize="hasRole('ADMIN')" class="admin-link">
-                <a th:href="@{/squadre/nuova}">+ Squadra</a>
+                <a th:href="@{/squadre/nuova}">+ Team</a>
             </li>
             <li sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post" style="display:inline">
@@ -43,7 +43,7 @@
             </li>
             <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
             <li sec:authorize="!isAuthenticated()">
-                <a th:href="@{/register}" class="btn btn-primary btn-sm">Registrati</a>
+                <a th:href="@{/register}" class="btn btn-primary btn-sm">Sign Up</a>
             </li>
         </ul>
     </div>
@@ -52,7 +52,7 @@
 <footer th:fragment="footer">
     <div class="footer">
         <span class="footer-logo">⚽ FOOTBALL TOURNAMENTS</span>
-        <span>Sistema Informativo su Web &copy; 2026</span>
+        <span>Web Information Systems &copy; 2026</span>
     </div>
 </footer>
 

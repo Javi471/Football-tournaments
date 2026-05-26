@@ -143,27 +143,27 @@
       <div><div class="lt1">FOOTBALL</div><div class="lt2">TOURNAMENTS</div></div>
     </a>
     <nav class="lnd-nav">
-      <a th:href="@{/}" class="active">Inicio</a>
-      <a th:href="@{/tornei}">Torneos</a>
-      <a th:href="@{/squadre}">Equipos</a>
-      <a th:href="@{/tornei}">Calendario</a>
+      <a th:href="@{/}" class="active">Home</a>
+      <a th:href="@{/tornei}">Tournaments</a>
+      <a th:href="@{/squadre}">Teams</a>
+      <a th:href="@{/tornei}">Schedule</a>
     </nav>
     <div class="nav-auth">
       <sec:authorize access="isAuthenticated()">
         <span style="color:#D6DCE3;font-size:12px;letter-spacing:.1em;" sec:authentication="name"></span>
         <form th:action="@{/logout}" method="post" style="display:inline">
-          <button type="submit">Salir</button>
+          <button type="submit">Sign Out</button>
         </form>
       </sec:authorize>
       <sec:authorize access="!isAuthenticated()">
-        <a th:href="@{/login}" class="login">Acceder</a>
-        <a th:href="@{/register}" class="register">Registrarse</a>
+        <a th:href="@{/login}" class="login">Sign In</a>
+        <a th:href="@{/register}" class="register">Sign Up</a>
       </sec:authorize>
     </div>
   </header>
 
   <!-- Ribbon -->
-  <div class="ribbon">TEMPORADA · 2026</div>
+  <div class="ribbon">SEASON · 2026</div>
 
   <!-- Left stage (footballer) -->
   <div class="stage">
@@ -269,18 +269,18 @@
 
   <!-- Right content -->
   <div class="content">
-    <div class="eyebrow-lnd">LIGA NACIONAL · TEMPORADA 2026</div>
-    <h1 class="title">FÚTBOL</h1>
-    <h2 class="sub">TORNEOS &amp; LIGAS</h2>
-    <p class="blurb">Organiza, juega y vive la pasión del fútbol amateur. Calendarios automáticos, clasificaciones en vivo y todo lo que tu equipo necesita para llegar a la final.</p>
+    <div class="eyebrow-lnd">NATIONAL LEAGUE · SEASON 2026</div>
+    <h1 class="title">FOOTBALL</h1>
+    <h2 class="sub">TOURNAMENTS &amp; LEAGUES</h2>
+    <p class="blurb">Organise, play and live the passion of amateur football. Automatic schedules, live standings and everything your team needs to reach the final.</p>
     <div class="cta-row">
-      <a th:href="@{/register}" class="btn-lnd">Inscríbete</a>
-      <a th:href="@{/tornei}" class="btn-ghost-lnd">Ver torneos</a>
+      <a th:href="@{/register}" class="btn-lnd">Sign Up</a>
+      <a th:href="@{/tornei}" class="btn-ghost-lnd">View Tournaments</a>
     </div>
     <div class="stats">
-      <div class="stat"><div class="n"><em>+</em>240</div><div class="l">Equipos</div></div>
-      <div class="stat"><div class="n">36</div><div class="l">Ligas</div></div>
-      <div class="stat"><div class="n"><em>+</em>1.8k</div><div class="l">Partidos</div></div>
+      <div class="stat"><div class="n"><em>+</em>240</div><div class="l">Teams</div></div>
+      <div class="stat"><div class="n">36</div><div class="l">Leagues</div></div>
+      <div class="stat"><div class="n"><em>+</em>1.8k</div><div class="l">Matches</div></div>
     </div>
     <div class="dots br muted"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   </div>

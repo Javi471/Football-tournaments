@@ -5,7 +5,6 @@
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<!-- Detail hero -->
 <div class="detail-hero">
     <svg class="stripe-svg" viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="0,220 500,0 1440,0 1440,220" fill="rgba(43,183,168,.07)"/>
@@ -13,7 +12,7 @@
     </svg>
     <div class="inner">
         <nav class="breadcrumb">
-            <a th:href="@{/squadre}">Squadre</a>
+            <a th:href="@{/squadre}">Teams</a>
             <span>›</span>
             <span th:text="${squadra.nome}"></span>
         </nav>
@@ -22,18 +21,18 @@
                 <span class="eyebrow" th:text="${squadra.citta}"></span>
                 <h1 class="page-title" th:text="${squadra.nome}"></h1>
                 <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-                    <span class="badge badge-teal" th:text="'Fondata: ' + ${squadra.annoFondazione}"></span>
+                    <span class="badge badge-teal" th:text="'Founded: ' + ${squadra.annoFondazione}"></span>
                     <span class="badge badge-gray"
-                          th:text="${#lists.size(squadra.giocatori)} + ' giocatori'"></span>
+                          th:text="${#lists.size(squadra.giocatori)} + ' players'"></span>
                 </div>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start"
                  sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/squadre/{id}/modifica(id=${squadra.id})}" class="btn btn-ghost btn-sm">
-                    Modifica Squadra
+                    Edit Team
                 </a>
                 <a th:href="@{/giocatori/nuovo(squadraId=${squadra.id})}" class="btn btn-primary btn-sm">
-                    + Giocatore
+                    + Player
                 </a>
             </div>
         </div>
@@ -43,21 +42,21 @@
 <div class="page-wrapper">
     <div class="section">
         <div class="section-header">
-            <h2 class="section-title">Rosa Giocatori</h2>
+            <h2 class="section-title">Squad Players</h2>
         </div>
         <div th:if="${#lists.isEmpty(squadra.giocatori)}" class="empty-state">
             <div class="empty-icon">👤</div>
-            <p>Nessun giocatore registrato in questa squadra.</p>
+            <p>No players registered for this team.</p>
         </div>
         <div class="table-wrap" th:unless="${#lists.isEmpty(squadra.giocatori)}">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Cognome</th>
-                        <th>Ruolo</th>
-                        <th>Data Nascita</th>
-                        <th class="center">Altezza (cm)</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Position</th>
+                        <th>Date of Birth</th>
+                        <th class="center">Height (cm)</th>
                         <th sec:authorize="hasRole('ADMIN')"></th>
                     </tr>
                 </thead>
@@ -74,10 +73,10 @@
                         <td class="center" th:text="${g.altezza != null} ? ${g.altezza} + ' cm' : '—'"></td>
                         <td sec:authorize="hasRole('ADMIN')" style="white-space:nowrap">
                             <a th:href="@{/giocatori/{id}/modifica(id=${g.id})}" class="btn btn-ghost btn-sm">
-                                Modifica
+                                Edit
                             </a>
                             <form th:action="@{/giocatori/{id}/elimina(id=${g.id})}" method="post"
-                                  style="display:inline" onsubmit="return confirm('Eliminare questo giocatore?')">
+                                  style="display:inline" onsubmit="return confirm('Delete this player?')">
                                 <button type="submit" class="btn btn-danger btn-sm">✕</button>
                             </form>
                         </td>

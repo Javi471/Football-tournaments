@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Arbitri')}"></head>
+<head th:replace="~{fragments/layout :: head('Referees')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<!-- Hero stripe -->
 <div class="hero-stripe">
     <svg class="stripe-svg" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="0,200 400,0 1440,0 1440,200" fill="rgba(43,183,168,.06)"/>
@@ -13,11 +12,11 @@
     <div class="hero-inner">
         <div class="page-header">
             <div class="page-header-left">
-                <span class="eyebrow">⚖️ Corpo Arbitrale</span>
-                <h1 class="page-title">Arbitri</h1>
-                <p class="page-subtitle">Registro ufficiale degli arbitri</p>
+                <span class="eyebrow">⚖️ Official Registry</span>
+                <h1 class="page-title">Referees</h1>
+                <p class="page-subtitle">Registered match officials</p>
             </div>
-            <a th:href="@{/arbitri/nuovo}" class="btn btn-primary">+ Nuovo Arbitro</a>
+            <a th:href="@{/arbitri/nuovo}" class="btn btn-primary">+ New Referee</a>
         </div>
     </div>
 </div>
@@ -25,16 +24,16 @@
 <div class="page-wrapper">
     <div th:if="${#lists.isEmpty(arbitri)}" class="empty-state">
         <div class="empty-icon">⚖️</div>
-        <p>Nessun arbitro registrato.</p>
+        <p>No referees registered yet.</p>
     </div>
 
     <div class="table-wrap" th:unless="${#lists.isEmpty(arbitri)}">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>Codice Arbitrale</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Referee Code</th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,9 +43,7 @@
                     <td th:text="${a.nome}"></td>
                     <td><span class="badge badge-teal" th:text="${a.codiceArbitrale}"></span></td>
                     <td>
-                        <a th:href="@{/arbitri/{id}/modifica(id=${a.id})}" class="btn btn-ghost btn-sm">
-                            Modifica
-                        </a>
+                        <a th:href="@{/arbitri/{id}/modifica(id=${a.id})}" class="btn btn-ghost btn-sm">Edit</a>
                     </td>
                 </tr>
             </tbody>

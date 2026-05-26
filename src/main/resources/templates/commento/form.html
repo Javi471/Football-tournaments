@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Modifica Commento')}"></head>
+<head th:replace="~{fragments/layout :: head('Edit Comment')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="page-wrapper" style="max-width:600px">
     <div class="form-card">
         <nav class="breadcrumb" style="margin-bottom:20px">
-            <a th:href="@{/tornei}">Tornei</a>
+            <a th:href="@{/tornei}">Tournaments</a>
             <span>›</span>
-            <a th:href="@{/partite/{id}(id=${commento.partita.id})}">Partita</a>
+            <a th:href="@{/partite/{id}(id=${commento.partita.id})}">Match</a>
             <span>›</span>
-            <span>Modifica Commento</span>
+            <span>Edit Comment</span>
         </nav>
-        <h2>Modifica Commento</h2>
+        <h2>Edit Comment</h2>
 
         <form th:action="@{/commenti/{id}/modifica(id=${commento.id})}" method="post">
             <div class="form-group">
-                <label>Il tuo commento</label>
+                <label>Your comment</label>
                 <textarea name="testo" rows="5" required
                           th:text="${commento.testo}"
-                          placeholder="Scrivi il tuo commento..."></textarea>
+                          placeholder="Write your comment..."></textarea>
             </div>
             <div class="form-actions">
-                <a th:href="@{/partite/{id}(id=${commento.partita.id})}" class="btn btn-ghost">Annulla</a>
-                <button type="submit" class="btn btn-primary">Aggiorna Commento</button>
+                <a th:href="@{/partite/{id}(id=${commento.partita.id})}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Comment</button>
             </div>
         </form>
     </div>

@@ -5,7 +5,6 @@
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<!-- Detail hero -->
 <div class="detail-hero">
     <svg class="stripe-svg" viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="0,220 500,0 1440,0 1440,220" fill="rgba(43,183,168,.07)"/>
@@ -13,21 +12,21 @@
     </svg>
     <div class="inner">
         <nav class="breadcrumb">
-            <a th:href="@{/tornei}">Tornei</a>
+            <a th:href="@{/tornei}">Tournaments</a>
             <span>›</span>
             <span th:text="${torneo.nome}"></span>
         </nav>
         <div class="page-header" style="margin-bottom:0">
             <div class="page-header-left">
-                <span class="eyebrow" th:text="'Stagione ' + ${torneo.anno}"></span>
+                <span class="eyebrow" th:text="'Season ' + ${torneo.anno}"></span>
                 <h1 class="page-title" th:text="${torneo.nome}"></h1>
                 <p style="color:var(--muted);font-size:14px;margin-top:8px;max-width:600px"
                    th:if="${torneo.descrizione}" th:text="${torneo.descrizione}"></p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start"
                  sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/tornei/{id}/modifica(id=${torneo.id})}" class="btn btn-ghost btn-sm">Modifica</a>
-                <a th:href="@{/partite/nuova}" class="btn btn-primary btn-sm">+ Partita</a>
+                <a th:href="@{/tornei/{id}/modifica(id=${torneo.id})}" class="btn btn-ghost btn-sm">Edit</a>
+                <a th:href="@{/partite/nuova}" class="btn btn-primary btn-sm">+ Match</a>
             </div>
         </div>
     </div>
@@ -35,14 +34,13 @@
 
 <div class="page-wrapper">
 
-    <!-- Squadre partecipanti -->
     <div class="section">
         <div class="section-header">
-            <h2 class="section-title">Squadre Partecipanti</h2>
-            <span class="badge badge-teal" th:text="${#lists.size(torneo.squadre)} + ' squadre'"></span>
+            <h2 class="section-title">Participating Teams</h2>
+            <span class="badge badge-teal" th:text="${#lists.size(torneo.squadre)} + ' teams'"></span>
         </div>
         <div th:if="${#lists.isEmpty(torneo.squadre)}" class="empty-state" style="padding:32px 0">
-            <p>Nessuna squadra registrata in questo torneo.</p>
+            <p>No teams registered in this tournament.</p>
         </div>
         <div class="tag-list" th:unless="${#lists.isEmpty(torneo.squadre)}">
             <a class="tag" th:each="s : ${torneo.squadre}"
@@ -51,28 +49,27 @@
         </div>
     </div>
 
-    <!-- Calendario partite -->
     <div class="section">
         <div class="section-header">
-            <h2 class="section-title">Calendario Partite</h2>
+            <h2 class="section-title">Match Schedule</h2>
             <a th:href="@{/tornei/{id}/classifica(id=${torneo.id})}" class="btn btn-primary btn-sm">
-                🏆 Classifica
+                🏆 Standings
             </a>
         </div>
         <div th:if="${#lists.isEmpty(partite)}" class="empty-state" style="padding:40px 0">
             <div class="empty-icon">📅</div>
-            <p>Nessuna partita programmata.</p>
+            <p>No matches scheduled yet.</p>
         </div>
         <div class="table-wrap" th:unless="${#lists.isEmpty(partite)}">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Casa</th>
-                        <th>Ospite</th>
-                        <th>Luogo</th>
-                        <th class="center">Risultato</th>
-                        <th class="center">Stato</th>
+                        <th>Date</th>
+                        <th>Home</th>
+                        <th>Away</th>
+                        <th>Venue</th>
+                        <th class="center">Score</th>
+                        <th class="center">Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -94,13 +91,13 @@
                                   th:text="${p.stato}"></span>
                         </td>
                         <td style="white-space:nowrap">
-                            <a th:href="@{/partite/{id}(id=${p.id})}" class="btn btn-ghost btn-sm">Dettagli</a>
+                            <a th:href="@{/partite/{id}(id=${p.id})}" class="btn btn-ghost btn-sm">Details</a>
                             <span sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/partite/{id}/risultato(id=${p.id})}"
                                    th:if="${p.stato.name() == 'SCHEDULED'}"
-                                   class="btn btn-primary btn-sm">Risultato</a>
+                                   class="btn btn-primary btn-sm">Score</a>
                                 <form th:action="@{/partite/{id}/elimina(id=${p.id})}" method="post"
-                                      style="display:inline" onsubmit="return confirm('Eliminare questa partita?')">
+                                      style="display:inline" onsubmit="return confirm('Delete this match?')">
                                     <button type="submit" class="btn btn-danger btn-sm">✕</button>
                                 </form>
                             </span>

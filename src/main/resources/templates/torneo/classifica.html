@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Classifica')}"></head>
+<head th:replace="~{fragments/layout :: head('Standings')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="page-wrapper" style="max-width:600px;text-align:center;padding-top:80px">
     <div style="font-size:48px;margin-bottom:16px">🏆</div>
     <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;margin-bottom:8px">
-        Caricamento Classifica...
+        Loading Standings...
     </h2>
     <p style="color:var(--muted);margin-bottom:24px">
-        Redirect verso il frontend React in corso...
+        Redirecting to the React frontend...
     </p>
     <div class="alert alert-info">
-        La classifica è gestita da React. Assicurati che il frontend sia in esecuzione:
+        Standings are powered by React. Make sure the frontend is running:
         <code style="display:block;margin-top:8px;color:var(--teal-soft)">cd frontend &amp;&amp; npm run dev</code>
     </div>
     <noscript>
         <div class="alert alert-error" style="margin-top:16px">
-            JavaScript è necessario. Accedi direttamente a
+            JavaScript is required. Access directly:
             <a th:href="'http://localhost:5173/classifica/' + ${torneo.id}">
                 http://localhost:5173/classifica/<span th:text="${torneo.id}"></span>
             </a>
