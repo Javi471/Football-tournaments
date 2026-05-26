@@ -23,43 +23,61 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (userRepository.count() > 0) return;
 
-        // Utenti
-        userRepository.save(new User("admin", "admin@football.com", passwordEncoder.encode("Admin123"), UserRole.ADMIN));
-        userRepository.save(new User("user1", "user1@football.com", passwordEncoder.encode("User1234"), UserRole.USER));
+        // ── Seed data (only on first run) ──────────────────────────────
+        if (userRepository.count() == 0) {
 
-        // Torneo
-        Torneo torneo = torneoRepository.save(new Torneo("Serie A Amatoriale", 2026, "Torneo amatoriale primaverile"));
+            // Users
+            userRepository.save(new User("admin", "admin@football.com",
+                    passwordEncoder.encode("Admin123"), UserRole.ADMIN));
+            userRepository.save(new User("user1", "user1@football.com",
+                    passwordEncoder.encode("User123"), UserRole.USER));
 
-        // Squadre
-        Squadra roma = squadraRepository.save(new Squadra("FC Roma Amatori", 2010, "Roma"));
-        Squadra milano = squadraRepository.save(new Squadra("Milano United", 2008, "Milano"));
-        Squadra napoli = squadraRepository.save(new Squadra("Napoli Stars", 2012, "Napoli"));
-        Squadra torino = squadraRepository.save(new Squadra("Torino FC Amatori", 2015, "Torino"));
+            // Tournament
+            Torneo torneo = torneoRepository.save(
+                    new Torneo("Serie A Amatoriale", 2026, "Torneo amatoriale primaverile"));
 
-        torneo.getSquadre().addAll(java.util.List.of(roma, milano, napoli, torino));
-        torneoRepository.save(torneo);
+            // Teams
+            Squadra roma   = squadraRepository.save(new Squadra("FC Roma Amatori",    2010, "Roma"));
+            Squadra milano = squadraRepository.save(new Squadra("Milano United",       2008, "Milano"));
+            Squadra napoli = squadraRepository.save(new Squadra("Napoli Stars",        2012, "Napoli"));
+            Squadra torino = squadraRepository.save(new Squadra("Torino FC Amatori",  2015, "Torino"));
 
-        // Giocatori
-        giocatoreRepository.save(new Giocatore("Marco", "Rossi", LocalDate.of(1995, 3, 15), "Portiere", 185, roma));
-        giocatoreRepository.save(new Giocatore("Luca", "Bianchi", LocalDate.of(1998, 7, 22), "Difensore", 180, roma));
-        giocatoreRepository.save(new Giocatore("Alessandro", "Ferrari", LocalDate.of(1993, 11, 8), "Attaccante", 178, milano));
-        giocatoreRepository.save(new Giocatore("Giovanni", "Esposito", LocalDate.of(2000, 1, 30), "Centrocampista", 175, napoli));
+            torneo.getSquadre().addAll(java.util.List.of(roma, milano, napoli, torino));
+            torneoRepository.save(torneo);
 
-        // Arbitro
-        Arbitro arbitro = arbitroRepository.save(new Arbitro("Carlo", "Verdi", "ARB-001"));
+            // Players
+            giocatoreRepository.save(new Giocatore("Marco",     "Rossi",    LocalDate.of(1995,  3, 15), "Portiere",       185, roma));
+            giocatoreRepository.save(new Giocatore("Luca",      "Bianchi",  LocalDate.of(1998,  7, 22), "Difensore",      180, roma));
+            giocatoreRepository.save(new Giocatore("Alessandro","Ferrari",  LocalDate.of(1993, 11,  8), "Attaccante",     178, milano));
+            giocatoreRepository.save(new Giocatore("Giovanni",  "Esposito", LocalDate.of(2000,  1, 30), "Centrocampista", 175, napoli));
 
-        // Partite
-        partitaRepository.save(new Partita(
-            LocalDateTime.of(2026, 6, 1, 15, 0), "Stadio Comunale Roma",
-            torneo, roma, milano, arbitro));
-        Partita giocata = new Partita(
-            LocalDateTime.of(2026, 5, 20, 16, 0), "Campo Nord Milano",
-            torneo, napoli, torino, arbitro);
-        giocata.setGoalsHome(2);
-        giocata.setGoalsAway(1);
-        giocata.setStato(StatoPartita.PLAYED);
-        partitaRepository.save(giocata);
+            // Referee
+            Arbitro arbitro = arbitroRepository.save(new Arbitro("Carlo", "Verdi", "ARB-001"));
+
+            // Matches
+            partitaRepository.save(new Partita(
+                    LocalDateTime.of(2026, 6, 1, 15, 0), "Stadio Comunale Roma",
+                    torneo, roma, milano, arbitro));
+
+            Partita giocata = new Partita(
+                    LocalDateTime.of(2026, 5, 20, 16, 0), "Campo Nord Milano",
+                    torneo, napoli, torino, arbitro);
+            giocata.setGoalsHome(2);
+            giocata.setGoalsAway(1);
+            giocata.setStato(StatoPartita.PLAYED);
+            partitaRepository.save(giocata);
+        }
+
+        // ── Print credentials banner (always shown at startup) ─────────
+        String line = "═".repeat(52);
+        System.out.println("\n\033[36m╔" + line + "╗");
+        System.out.println("║        ⚽  FOOTBALL TOURNAMENTS — READY          ║");
+        System.out.println("╠" + line + "╣");
+        System.out.println("║  🌐  http://localhost:8080                       ║");
+        System.out.println("╠" + line + "╣");
+        System.out.println("║  👤  ADMIN     user: admin    pass: Admin123     ║");
+        System.out.println("║  👤  USER      user: user1    pass: User123      ║");
+        System.out.println("╚" + line + "╝\033[0m\n");
     }
 }
