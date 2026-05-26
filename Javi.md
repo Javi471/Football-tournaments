@@ -121,6 +121,31 @@ Template creati:
 
 ---
 
+## ✅ Step 11 — Design System (Claude Design · Dark/Teal Theme)
+**Data:** 26/05/2026
+
+Implementato il design system estratto dal file Claude Design (Landing.html):
+
+- **Palette**: dark ink (`#161A1F`), teal accent (`#2BB7A8`), paper (`#F4F6F7`)
+- **Font**: Bebas Neue (titoli display) + Manrope (corpo testo)
+- **`style.css`**: riscrittura completa con variabili CSS, tutti i componenti:
+  navbar sticky blur, card-grid, table-wrap, badge colorati (teal/green/red/gray),
+  form-card, checkbox-grid, alert, section, tag-list, match-hero, comment-card,
+  detail-hero, hero-stripe, score-grid, empty-state, footer
+- **`index.html`**: landing page con footballer SVG animato (10 keyframes),
+  strisce diagonali teal, CTA auth-aware con Thymeleaf Security
+- **`layout.html`**: navbar con logo SVG mark, pill admin-link, btn Registrati
+- **Tutti i template** riprogettati con il nuovo sistema:
+  - List pages → hero-stripe + card-grid con accent-bar
+  - Detail pages → detail-hero con breadcrumb + stripe SVG + table-wrap
+  - Form pages → form-card centrato con breadcrumb, form-row, error-msg
+  - Match detail → match-hero con score display / VS, comment-card list
+  - Score entry → score-grid con score-input grande
+- **`HomeController.java`**: serve `/` → template `index`
+- **`SecurityConfig`**: aggiunto permit per `/` e `/index`
+
+---
+
 ## 🔲 TODO — Da completare
 
 - [ ] Analisi sperimentale prestazioni JPA (confronto LAZY vs JOIN FETCH vs EntityGraph)
